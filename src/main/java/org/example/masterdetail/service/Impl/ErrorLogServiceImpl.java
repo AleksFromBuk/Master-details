@@ -16,12 +16,13 @@ public class ErrorLogServiceImpl implements ErrorLogService {
     private final ErrorLogRepository errorLogRepository;
 
     @Override
-    public void logError(String errorType, String message) {
+    public void logError(String message, String errorType) {
+        ErrorLog record = ErrorLog.builder()
+                .message(message)
+                .errorType(errorType)
+                .errorTime(LocalDateTime.now())
+                .build();
+        errorLogRepository.save(record);
         log.debug(message, errorType, LocalDateTime.now());
-        ErrorLog log = new ErrorLog();
-        log.setErrorTime(LocalDateTime.now());
-        log.setErrorType(errorType);
-        log.setMessage(message);
-        errorLogRepository.save(log);
     }
 }

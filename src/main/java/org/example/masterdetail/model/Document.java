@@ -1,14 +1,14 @@
 package org.example.masterdetail.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class Document {
 
     @Column(name ="doc_date", nullable = false)
     @NotNull
-    private LocalDate docDate;
+    private LocalDateTime docDate;
 
     @Column(name = "total_sum", nullable = false)
     private BigDecimal totalSum = BigDecimal.ZERO;
