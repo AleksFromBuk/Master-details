@@ -2,10 +2,7 @@ package org.example.masterdetail.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -18,6 +15,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "documents")
+@Builder
 public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "documents_documents_id_seq")

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Documents</title>
+</head>
+<body>
+<h1>List of Documents</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Number</th>
+        <th>Date</th>
+        <th>Total Sum</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="doc : ${documents}">
+        <td th:text="${doc.id}"></td>
+        <td th:text="${doc.docNumber}"></td>
+        <td th:text="${doc.docDate}"></td>
+        <td th:text="${doc.totalSum}"></td>
+        <td>
+            <form th:action="@{/documents/{id}/edit(id=${doc.id})}" method="get">
+                <button type="submit">Edit</button>
+            </form>
+            <form th:action="@{/documents/{id}/delete(id=${doc.id})}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/documents/new}">Add Document</a>
+</body>
+</html>

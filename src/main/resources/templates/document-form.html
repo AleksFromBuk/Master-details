@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Document Form</title>
+</head>
+<body>
+<h1>Document Form</h1>
+
+<form th:object="${document}"
+      th:action="@{${document.id != null} ? '/documents/' + ${document.id} : '/documents'}"
+      method="post">
+    <p>Number: <input type="text" th:field="*{docNumber}"/></p>
+    <p>Date: <input type="datetime-local" th:field="*{docDate}"/></p>
+    <p>Note: <input type="text" th:field="*{notes}"/></p>
+    <p>Total sum: <span th:text="${document.totalSum}"></span></p>
+
+    <div th:if="${errorMessage}">
+        <p style="color:red" th:text="${errorMessage}"></p>
+    </div>
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>Document Form</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Document Form</h1>-->
+
+<!--<form th:object="${document}"-->
+<!--      th:action="@{${document.id != null} ? '/documents/' + ${document.id} : '/documents'}"-->
+<!--      method="post">-->
+<!--    <p>Number: <input type="text" th:field="*{docNumber}"/></p>-->
+<!--    <p>Date: <input type="datetime-local" th:field="*{docDate}"/></p>-->
+<!--    <p>Note: <input type="text" th:field="*{notes}"/></p>-->
+<!--    <p>Total sum: <span th:text="${document.totalSum}"></span></p>-->
+
+<!--    <div th:if="${errorMessage}">-->
+<!--        <p style="color:red" th:text="${errorMessage}"></p>-->
+<!--    </div>-->
+
+<!--    <button type="submit">Save</button>-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="en">-->
+<!--<head>-->
+<!--    <title>Document Form</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Document Form</h1>-->
+<!--<form th:object="${document}" th:action="@{/documents}" method="post">-->
+<!--    <p>Number: <input type="text" th:field="*{docNumber}" /></p>-->
+<!--    <p>Date: <input type="datetime-local" th:field="*{docDate}" /></p>-->
+<!--    <p>Note: <input type="text" th:field="*{notes}" /></p>-->
+<!--    <p>Total Sum: <span th:text="*{totalSum}"></span></p>-->
+
+<!--    <h3>Specifications:</h3>-->
+<!--    <table>-->
+<!--        <tr th:each="detail : *{details}">-->
+<!--            <td><input type="text" th:field="*{details[__${detail.index}__].itemName}" /></td>-->
+<!--            <td><input type="number" step="0.01" th:field="*{details[__${detail.index}__].itemSum}" /></td>-->
+<!--        </tr>-->
+<!--    </table>-->
+
+<!--    <button type="submit">Save</button>-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>Document Form</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Document Form</h1>-->
+
+<!--<form th:object="${document}" th:action="@{/documents}" method="post">-->
+<!--    <p>Number: <input type="text" th:field="*{docNumber}" /></p>-->
+<!--    <p>Date: <input type="datetime-local" th:field="*{docDate}" /></p>-->
+<!--    <p>Note: <input type="text" th:field="*{notes}" /></p>-->
+<!--    <p>Total Sum: <span th:text="*{totalSum}">0</span></p>-->
+
+<!--    <h3>Specifications:</h3>-->
+<!--    <table>-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>Item Name</th>-->
+<!--            <th>Item Sum</th>-->
+<!--            <th>Actions</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="detail, iterStat : *{details}">-->
+<!--            <td><input type="text" th:field="*{details[__${iterStat.index}__].itemName}" /></td>-->
+<!--            <td><input type="number" step="0.01" th:field="*{details[__${iterStat.index}__].itemSum}" /></td>-->
+<!--            <td>-->
+<!--                <button type="button" th:onclick="'removeDetail(' + ${iterStat.index} + ')'" >Remove</button>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+
+<!--    <button type="button" onclick="addDetail()">Add Specification</button>-->
+
+<!--    <div th:if="${errorMessage}">-->
+<!--        <p style="color:red" th:text="${errorMessage}"></p>-->
+<!--    </div>-->
+
+<!--    <button type="submit">Save</button>-->
+<!--</form>-->
+
+<!--<script>-->
+<!--    function addDetail() {-->
+<!--        const tableBody = document.querySelector('table tbody');-->
+<!--        const newRow = tableBody.insertRow();-->
+<!--        newRow.innerHTML = `-->
+<!--            <td><input type="text" name="details[${tableBody.rows.length}].itemName" /></td>-->
+<!--            <td><input type="number" step="0.01" name="details[${tableBody.rows.length}].itemSum" /></td>-->
+<!--            <td><button type="button" onclick="removeDetail(${tableBody.rows.length})">Remove</button></td>-->
+<!--        `;-->
+<!--    }-->
+
+<!--    function removeDetail(index) {-->
+<!--        const tableBody = document.querySelector('table tbody');-->
+<!--        tableBody.deleteRow(index);-->
+<!--    }-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+<!--<form th:object="${document}" th:action="@{/documents}" method="post">-->
+<!--    <p>Number: <input type="text" th:field="*{docNumber}" /></p>-->
+<!--    <p>Date: <input type="datetime-local" th:field="*{docDate}" /></p>-->
+<!--    <p>Note: <input type="text" th:field="*{notes}" /></p>-->
+<!--    <p>Total Sum: <span th:text="*{totalSum}"></span></p>-->
+
+<!--&lt;!&ndash;    <table>&ndash;&gt;-->
+<!--&lt;!&ndash;        <thead>&ndash;&gt;-->
+<!--&lt;!&ndash;        <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;            <th>Item Name</th>&ndash;&gt;-->
+<!--&lt;!&ndash;            <th>Item Sum</th>&ndash;&gt;-->
+<!--&lt;!&ndash;            <th>Actions</th>&ndash;&gt;-->
+<!--&lt;!&ndash;        </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;        </thead>&ndash;&gt;-->
+<!--&lt;!&ndash;        <tbody>&ndash;&gt;-->
+<!--&lt;!&ndash;        <tr th:each="detail, stat : *{details}">&ndash;&gt;-->
+<!--&lt;!&ndash;            <td><input type="text" th:field="*{details[__${stat.index}__].itemName}" /></td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td><input type="number" th:field="*{details[__${stat.index}__].itemSum}" /></td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td>&ndash;&gt;-->
+<!--&lt;!&ndash;                <button type="submit" formaction="@{/documents/removeDetail(documentId=${document.id}, detailId=${detail.id})}">Remove</button>&ndash;&gt;-->
+<!--&lt;!&ndash;            </td>&ndash;&gt;-->
+<!--&lt;!&ndash;        </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;        </tbody>&ndash;&gt;-->
+<!--&lt;!&ndash;    </table>&ndash;&gt;-->
+<!--    <table>-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>Item Name</th>-->
+<!--            <th>Item Sum</th>-->
+<!--            <th>Actions</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="detail, iterStat : ${document.details}">-->
+<!--            <td><input type="text" th:field="*{details[__${iterStat.index}__].itemName}" /></td>-->
+<!--            <td><input type="number" th:field="*{details[__${iterStat.index}__].itemSum}" /></td>-->
+<!--            <td><button type="button" th:onclick="|removeDetail(${iterStat.index})|">Remove</button></td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--        <div th:if="${errorMessage}">-->
+<!--            <p style="color:red" th:text="${errorMessage}"></p>-->
+<!--        </div>-->
+
+<!--    </table>-->
+<!--    <button type="button" onclick="addDetail()">Add Specification</button>-->
+<!--    <button type="submit">Save</button>-->
+<!--    <form th:action="@{/documents/{docId}/delete(docId=${document.id})}" method="post">-->
+<!--        <button type="submit">Delete</button>-->
+<!--    </form>-->
+<!--</form>-->

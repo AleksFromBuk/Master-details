@@ -9,7 +9,7 @@ CREATE SEQUENCE documents_documents_id_seq
 CREATE TABLE IF NOT EXISTS documents (
                                          document_id BIGINT DEFAULT nextval('documents_documents_id_seq') PRIMARY KEY,
                                          doc_number VARCHAR(50) NOT NULL,
-                                         doc_date DATE NOT NULL,
+                                         doc_date TIMESTAMP NOT NULL,
                                          total_sum NUMERIC(18, 2) NOT NULL,  -- хранит пересчитанную сумму из деталей
                                          notes TEXT,
 

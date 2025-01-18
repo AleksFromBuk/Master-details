@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -81,8 +82,8 @@ public class DocumentServiceImpl implements DocumentService {
      */
     @Override
     @Transactional
-    public Document update(Long id, Document updatedDocument) {
-        Document existing = findDocOrElseThrow(id);
+    public Document updateDocument(Long id, Document updatedDocument) {
+        Document existing = findDocOrElseThrowException(id);
         if (!existing.getDocNumber().equals(updatedDocument.getDocNumber())) {
             if (documentRepository.existsByDocNumber(updatedDocument.getDocNumber())) {
                 String err = "Document with number " + updatedDocument.getDocNumber() + " already exists";
@@ -115,7 +116,7 @@ public class DocumentServiceImpl implements DocumentService {
      */
     @Override
     @Transactional
-    public void delete(Long id) {
+    public void deleteDocument(Long id) {
         if (!documentRepository.existsById(id)) {
             String err = "Cannot delete. Document not found: " + id;
             errorLogService.logError(ErrorType.DOC_NOT_FOUND.getMessage(), err);
@@ -133,7 +134,7 @@ public class DocumentServiceImpl implements DocumentService {
      */
     @Transactional
     public DocumentDetail addDetail(Long docId, DocumentDetail detail) {
-        Document existing = findDocOrElseThrow(docId);
+        Document existing = findDocOrElseThrowException(docId);
         detail.setDocument(existing);
         existing.getDetails().add(detail);
         BigDecimal currentValue = getSafeValue(existing.getTotalSum());
@@ -152,7 +153,7 @@ public class DocumentServiceImpl implements DocumentService {
      */
     @Transactional
     public void removeDetail(Long docId, Long detailId) {
-        Document existing = findDocOrElseThrow(docId);
+        Document existing = findDocOrElseThrowException(docId);
         DocumentDetail toRemove = existing.getDetails().stream()
                 .filter(d -> Objects.equals(d.getId(), detailId))
                 .findFirst()
@@ -182,7 +183,7 @@ public class DocumentServiceImpl implements DocumentService {
      */
     @Transactional
     public DocumentDetail updateDetail(Long docId, Long detailId, DocumentDetail newDetail) {
-        Document document = findDocOrElseThrow(docId);
+        Document document = findDocOrElseThrowException(docId);
         DocumentDetail existingDetail = document.getDetails().stream()
                 .filter(d -> Objects.equals(d.getId(), detailId))
                 .findFirst()
@@ -203,8 +204,32 @@ public class DocumentServiceImpl implements DocumentService {
         return existingDetail;
     }
 
-    private Document findDocOrElseThrow(Long docId) {
-        return documentRepository.findById(docId).orElseThrow(() -> {
+    @Override
+    @Transactional(readOnly = true)
+    public DocumentDetail findDetail(Long docId, Long detailId) {
+        Document document = findDocOrElseThrowException(docId);
+        return document.getDetails().stream()
+                .filter(d -> Objects.equals(d.getId(), detailId))
+                .findFirst().orElseThrow(() -> {
+                    String err = "Detail not found: " + detailId;
+                    errorLogService.logError(ErrorType.DETAIL_NOT_FOUND.getMessage(), err);
+                    return new RuntimeException(err);
+                });
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Document> findAllDocuments() {
+        return documentRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public Document findWithDetailsById(Long id) {
+        return findDocOrElseThrowException(id);
+    }
+
+    private Document findDocOrElseThrowException(Long docId) {
+        return documentRepository.findWithDetailsById(docId).orElseThrow(() -> {
             String err = "Document not found: " + docId;
             errorLogService.logError(ErrorType.DOC_NOT_FOUND.getMessage(), err);
             return new RuntimeException(err);
