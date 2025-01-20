@@ -9,7 +9,7 @@ CREATE SEQUENCE error_log_error_log_id_seq
 CREATE TABLE IF NOT EXISTS error_log (
                                          error_id BIGINT DEFAULT nextval('error_log_error_log_id_seq') PRIMARY KEY,
                                          error_time TIMESTAMP NOT NULL,
-                                         error_type VARCHAR(100) NOT NULL,
+                                         error_type VARCHAR(255) NOT NULL,
                                          message TEXT NOT NULL
 );
 

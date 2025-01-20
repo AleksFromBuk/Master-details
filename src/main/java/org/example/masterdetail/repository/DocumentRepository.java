@@ -17,10 +17,6 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
     @EntityGraph(attributePaths = "details")
     Optional<Document> findWithDetailsById(Long id);
 
-//    @EntityGraph(attributePaths = "details")
-//    @Query("select d from Document d")
-//    List<Document> findAllWithDetails();
-
     @EntityGraph(attributePaths = "details")
     List<Document> findAll();
 

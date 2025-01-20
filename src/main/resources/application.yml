@@ -1,19 +1,55 @@
+#spring:
+#  application:
+#    name: Master-Detail
+#  datasource:
+#    hikari:
+#      transaction-isolation: TRANSACTION_READ_COMMITTED
+#      auto-commit: false
+#      minimum-idle: 5
+#      maximum-pool-size: 20
+#      idle-timeout: 30000
+#      max-lifetime: 1800000
+#      pool-name: HikariCP
+#      connection-test-query: SELECT 1
+#    url: jdbc:postgresql://postgres:5432/masterdetail_db
+#    username: masteruser
+#    password: masterpass
+#  jpa:
+#    hibernate:
+#      ddl-auto: validate
+#    show-sql: true
+#    open-in-view: false
+#    properties:
+#      hibernate:
+#        hbm2ddl:
+#          auto=update:
+#      dialect: org.hibernate.dialect.PostgresSQLDialect
+#
+#
+#  liquibase:
+#    enabled: true
+#    change-log: classpath:db/changelog/001_changelog.xml
+#
+#
+##logging:
+##  level.root:
+##    debug
 spring:
-  application:
-    name: Master-Detail
   datasource:
-    hikari:
-      transaction-isolation: TRANSACTION_READ_COMMITTED
-      auto-commit: false
-      minimum-idle: 5
-      maximum-pool-size: 20
-      idle-timeout: 30000
-      max-lifetime: 1800000
-      pool-name: HikariCP
-      connection-test-query: SELECT 1
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: password
+    driver-class-name: org.postgresql.Driver
+
+    hikari:
+          transaction-isolation: TRANSACTION_READ_COMMITTED
+          auto-commit: false
+          minimum-idle: 5
+          maximum-pool-size: 20
+          idle-timeout: 30000
+          max-lifetime: 1800000
+          pool-name: HikariCP
+          connection-test-query: SELECT 1
   jpa:
     hibernate:
       ddl-auto: validate
@@ -25,12 +61,6 @@ spring:
           auto=update:
       dialect: org.hibernate.dialect.PostgresSQLDialect
 
-
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/001_changelog.xml
-
-
-#logging:
-#  level.root:
-#    debug
