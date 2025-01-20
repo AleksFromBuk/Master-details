@@ -36,8 +36,9 @@ password: *password*
 
 ## Использование
 
-Точка входа класс 
-- *Master-Detail\src\main\java\org\example\masterdetail\MasterDetailApplication.java*
+Точка входа: 
+
+*Master-Detail\src\main\java\org\example\masterdetail\MasterDetailApplication.java*
 
 Приложение поднимается на http://localhost:8080/
 
