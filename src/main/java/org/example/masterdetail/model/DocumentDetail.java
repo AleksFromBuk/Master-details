@@ -1,6 +1,7 @@
 package org.example.masterdetail.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,10 +27,12 @@ public class DocumentDetail {
     @JoinColumn(name = "document_id", nullable = false)
     private Document document;
 
-    @Column(name = "item_name", nullable = false)
+    @Column(name = "item_name")
+    @NotNull(message = "Item name cannot be null")
     private String itemName;
 
-    @Column(name = "item_sum", nullable = false)
+    @Column(name = "item_sum")
+    @NotNull(message = "Item sum cannot be null")
     private BigDecimal itemSum;
 
 }

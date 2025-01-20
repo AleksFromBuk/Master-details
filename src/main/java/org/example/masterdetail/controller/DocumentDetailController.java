@@ -45,7 +45,7 @@ public class DocumentDetailController {
         }
         try {
             documentService.addDetail(docId, detail);
-        } catch (RuntimeException ex) {
+        } catch (Exception ex) {
             model.addAttribute("errorMessage", ex.getMessage());
             return "detail-form";
         }
@@ -99,6 +99,12 @@ public class DocumentDetailController {
             model.addAttribute("errorMessage", ex.getMessage());
         }
         return "redirect:/documents";
+    }
+
+    @RequestMapping("/error")
+    public String handleError(Model model) {
+        model.addAttribute("errorMessage", "Произошла ошибка, попробуйте снова.");
+        return "error";
     }
 }
 

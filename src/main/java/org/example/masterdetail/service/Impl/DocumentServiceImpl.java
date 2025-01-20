@@ -3,10 +3,12 @@ package org.example.masterdetail.service.Impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.masterdetail.enums.ErrorType;
+import org.example.masterdetail.errors.CustomValidationException;
 import org.example.masterdetail.model.Document;
 import org.example.masterdetail.model.DocumentDetail;
 import org.example.masterdetail.repository.DocumentRepository;
 import org.example.masterdetail.service.DocumentService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -132,7 +134,8 @@ public class DocumentServiceImpl implements DocumentService {
      * @param detail новая деталь
      * @return добавленная деталь
      */
-    @Transactional
+    //@Transactional
+    @Override
     public DocumentDetail addDetail(Long docId, DocumentDetail detail) {
         Document existing = findDocOrElseThrowException(docId);
         detail.setDocument(existing);
@@ -140,7 +143,12 @@ public class DocumentServiceImpl implements DocumentService {
         BigDecimal currentValue = getSafeValue(existing.getTotalSum());
         BigDecimal additionalValue = getSafeValue(detail.getItemSum());
         existing.setTotalSum(currentValue.add(additionalValue));
-        documentRepository.save(existing);
+        try {
+           documentRepository.save(existing);
+        } catch (Exception ex) {
+            errorLogService.logError("Ошибка при сохранении спецификации: " + ex.getMessage(), ErrorType.VALIDATION_ERROR.getMessage());
+            throw new CustomValidationException("Некорректные данные спецификации, проверьте правильность введенных значений.");
+        }
         log.info("detail with id added: {}", detail.getId());
         return detail;
     }
@@ -219,7 +227,7 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Document> findAllDocuments() {
+    public List<Document> findAllDocumentsWithDetails() {
         return documentRepository.findAll();
     }
 

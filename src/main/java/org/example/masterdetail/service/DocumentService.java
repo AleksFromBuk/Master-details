@@ -14,7 +14,7 @@ public interface DocumentService {
 
     void deleteDocument(Long id);
 
-    List<Document> findAllDocuments();
+    List<Document> findAllDocumentsWithDetails();
 
     DocumentDetail addDetail(Long docId, DocumentDetail detail);
 

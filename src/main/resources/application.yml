@@ -3,6 +3,8 @@ spring:
     name: Master-Detail
   datasource:
     hikari:
+      transaction-isolation: TRANSACTION_READ_COMMITTED
+      auto-commit: false
       minimum-idle: 5
       maximum-pool-size: 20
       idle-timeout: 30000
@@ -16,6 +18,19 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto=update:
+      dialect: org.hibernate.dialect.PostgresSQLDialect
+
+
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/001_changelog.xml
+
+
+#logging:
+#  level.root:
+#    debug

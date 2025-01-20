@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Контроллер для операций над Document (Master).
@@ -29,7 +30,13 @@ public class DocumentController {
      */
     @GetMapping
     public String listDocuments(Model model) {
-        model.addAttribute("documents", documentService.findAllDocuments());
+        List<Document> documents = documentService.findAllDocumentsWithDetails();
+        documents.forEach(d -> {
+            if (d.getDetails() == null) {
+                d.setDetails(new ArrayList<>());
+            }
+        });
+        model.addAttribute("documents", documents);
         return "document-list";
     }
 
@@ -104,5 +111,11 @@ public class DocumentController {
             model.addAttribute("errorMessage", ex.getMessage());
         }
         return "redirect:/documents";
+    }
+
+    @RequestMapping("/error")
+    public String handleError(Model model) {
+        model.addAttribute("errorMessage", "Произошла ошибка, попробуйте снова.");
+        return "error";
     }
 }
