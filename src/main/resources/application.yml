@@ -1,3 +1,4 @@
+#   *** для запуска с установленной БД на машине ***
 #spring:
 #  application:
 #    name: Master-Detail
@@ -11,9 +12,9 @@
 #      max-lifetime: 1800000
 #      pool-name: HikariCP
 #      connection-test-query: SELECT 1
-#    url: jdbc:postgresql://postgres:5432/masterdetail_db
-#    username: masteruser
-#    password: masterpass
+#    url: jdbc:postgresql://localhost:5432/postgres
+#    username: postgres
+#    password: password
 #  jpa:
 #    hibernate:
 #      ddl-auto: validate
@@ -29,11 +30,12 @@
 #  liquibase:
 #    enabled: true
 #    change-log: classpath:db/changelog/001_changelog.xml
-#
-#
-##logging:
-##  level.root:
-##    debug
+#logging:
+#  level.root:
+#    debug
+
+
+#   ********* Для запуска приложения с БД в докере **********
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres

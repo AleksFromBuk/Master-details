@@ -9,12 +9,24 @@
 
 ## Запуск
 1. Если установлен Docker: 
-запустите на выполнение services в файле docker-compose.yml, который в корне проекта
+запустите на выполнение *services* в файле docker-compose.yml, который в корне проекта
    ```bash 
-   services:
+   a) 'services:'
+   б) или командой в терминале 'docker-compose up'  
+    
+
 2. Если на локальной машине установлена БД PostgreSQL, можно часть application.yml, которая 
 закомментрована - раскоментировать, а текущую-активную наоброт - закомментировать.
-При этом учитывать схему, url, логин и пароль исходя из содержимого файла application.yml.
+
+При этом учитывать: 
+
+схема: *default*
+
+url: *jdbc:postgresql://localhost:5432/postgres* 
+
+username: *postgres*
+
+password: *password*
 
 ## Соберите и запустите приложение:
    1. mvn clean package
@@ -23,6 +35,9 @@
    2. либо использовать интегрированную среду разработки, например, Intellij Idea
 
 ## Использование
+
+Точка входа класс 
+- *Master-Detail\src\main\java\org\example\masterdetail\MasterDetailApplication.java*
 
 Приложение поднимается на http://localhost:8080/
 
